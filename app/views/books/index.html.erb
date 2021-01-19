@@ -1,0 +1,56 @@
+<p id="notice">
+    <%=  notice %>
+</p>
+
+<h1>Books</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Body</th>
+            <th scope="col" colspan="3"></th>
+        </tr>
+    </thead>
+
+    <% @books.each do |book| %>
+        <tbody>
+            <tr>
+                <td><%= book.title %></td>
+                <td><%= book.body %></td>
+                <td><%= link_to "Show", book_path(book), class: "btn btn-link" %></td>
+                <td><%= link_to "Edit", edit_book_path(book), class: "btn btn-link" %></td>
+                <td><%= link_to "Destroy", book_path(book), method: :delete, "data-confirm" => "Are you sure？", class: "btn btn-link" %></td>
+            </tr>
+        </tbody>
+    <% end %>
+</table>
+
+
+<h2>New book</h2>
+
+<% if @new_book.errors.any? %>
+  <div class="alert alert-danger">
+    <span style="color: red">error</span>
+    <ul style="color: red">
+      <% @new_book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @new_book, local: true do |f| %>
+    <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+    </div>
+
+    <div class="form-group">
+        <%= f.label :body %>
+        <%= f.text_area :body %>
+    </div>
+
+    <%= f.submit 'Create Book', class: "btn btn-primary" %>
+
+<% end %>
